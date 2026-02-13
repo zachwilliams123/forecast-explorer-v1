@@ -9,10 +9,21 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from pathlib import Path
+import sys
 
-from core import get_connection
-from config import DEFAULT_RUN_ID, DEFAULT_NODE, YEARS
-from databook.builder import build_databook
+# Debug: Show Python path and available modules
+if st.sidebar.checkbox("Show Debug Info", value=False):
+    st.sidebar.write("Python Path:", sys.path)
+    st.sidebar.write("Current Dir:", Path.cwd())
+
+try:
+    from core import get_connection
+    from config import DEFAULT_RUN_ID, DEFAULT_NODE, YEARS
+    from databook.builder import build_databook
+except ImportError as e:
+    st.error(f"Import Error: {e}")
+    st.error("Make sure all files are uploaded and requirements.txt is installed.")
+    st.stop()
 
 
 # Page config
